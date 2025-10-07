@@ -11,11 +11,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import zed.rainxch.octoberminichallenges.ui.theme.OctoberMiniChallengesTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var showSplash = true
+        lifecycleScope.launch {
+            delay(6000)
+            showSplash = false
+        }
+
+        installSplashScreen().setKeepOnScreenCondition {
+            showSplash
+        }
+
         enableEdgeToEdge()
         setContent {
             OctoberMiniChallengesTheme {
