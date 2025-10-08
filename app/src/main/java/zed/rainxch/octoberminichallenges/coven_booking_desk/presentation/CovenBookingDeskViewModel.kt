@@ -6,6 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import zed.rainxch.octoberminichallenges.R
+import zed.rainxch.octoberminichallenges.coven_booking_desk.presentation.models.Desk
+import zed.rainxch.octoberminichallenges.coven_booking_desk.presentation.models.Reservation
 
 class CovenBookingDeskViewModel : ViewModel() {
 
@@ -15,7 +20,8 @@ class CovenBookingDeskViewModel : ViewModel() {
     val state = _state
         .onStart {
             if (!hasLoadedInitialData) {
-                /** Load initial data here **/
+                loadInitialData()
+
                 hasLoadedInitialData = true
             }
         }
@@ -25,9 +31,56 @@ class CovenBookingDeskViewModel : ViewModel() {
             initialValue = CovenBookingDeskState()
         )
 
+    private fun loadInitialData() {
+        viewModelScope.launch {
+            val desks = listOf(
+                Desk(
+                    name = "Morgana",
+                    imageRes = R.drawable.char_1,
+                    reservation = Reservation("Oct 31", "02:00")
+                ),
+                Desk(
+                    name = "Selene",
+                    imageRes = R.drawable.char_2,
+                    reservation = Reservation("Oct 30", "01:00")
+                ),
+                Desk(
+                    name = "Hecate",
+                    imageRes = R.drawable.char_3,
+                    reservation = Reservation("Oct 30", "02:00")
+                ),
+                Desk(
+                    name = "Elvira",
+                    imageRes = R.drawable.char_4,
+                    reservation = Reservation("Nov 1", "03:00")
+                ),
+                Desk(
+                    name = "Nyx",
+                    imageRes = R.drawable.char_5,
+                ),
+                Desk(
+                    name = "Circe",
+                    imageRes = R.drawable.char_6,
+                    reservation = Reservation("Oct 30", "05:00")
+                )
+            )
+
+            _state.update {
+                it.copy(
+                    desks = desks
+                )
+            }
+        }
+    }
+
     fun onAction(action: CovenBookingDeskAction) {
         when (action) {
-            else -> TODO("Handle actions")
+            is CovenBookingDeskAction.OnDeskClick -> {
+                _state.update { it.copy(
+                    selectedDesk = action.desk
+                ) }
+            }
+            CovenBookingDeskAction.OnPrimaryButtonClick -> TODO()
         }
     }
 

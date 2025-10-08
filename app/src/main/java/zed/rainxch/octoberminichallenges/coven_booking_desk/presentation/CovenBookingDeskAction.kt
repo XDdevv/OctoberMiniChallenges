@@ -1,5 +1,8 @@
 package zed.rainxch.octoberminichallenges.coven_booking_desk.presentation
 
-sealed interface CovenBookingDeskAction {
+import zed.rainxch.octoberminichallenges.coven_booking_desk.presentation.models.Desk
 
+sealed interface CovenBookingDeskAction {
+    data class OnDeskClick(val desk: Desk) : CovenBookingDeskAction
+    data object OnPrimaryButtonClick : CovenBookingDeskAction
 }

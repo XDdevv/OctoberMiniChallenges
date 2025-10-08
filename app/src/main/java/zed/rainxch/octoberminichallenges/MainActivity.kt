@@ -15,6 +15,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import zed.rainxch.octoberminichallenges.coven_booking_desk.presentation.CovenBookingDeskRoot
 import zed.rainxch.octoberminichallenges.ui.theme.OctoberMiniChallengesTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
         var showSplash = true
         lifecycleScope.launch {
-            delay(6000)
+//            delay(6000)
             showSplash = false
         }
 
@@ -34,12 +35,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OctoberMiniChallengesTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                CovenBookingDeskRoot()
             }
         }
     }
